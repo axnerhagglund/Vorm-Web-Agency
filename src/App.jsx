@@ -506,27 +506,147 @@ function Contact() {
 }
 
 /* ─── Footer ─── */
+const footerColumns = [
+  {
+    label: 'Studio',
+    items: [
+      { text: 'Amsterdam, NL', href: null },
+      { text: 'Est. 2019', href: null },
+      { text: 'hello@vorm.studio', href: 'mailto:hello@vorm.studio' },
+      { text: '+31 20 123 4567', href: 'tel:+31201234567' },
+    ],
+  },
+  {
+    label: 'Navigate',
+    items: [
+      { text: 'Work', href: '#work' },
+      { text: 'Services', href: '#services' },
+      { text: 'About', href: '#about' },
+      { text: 'Contact', href: '#contact' },
+    ],
+  },
+  {
+    label: 'Services',
+    items: [
+      { text: 'Brand Identity', href: '#services' },
+      { text: 'Digital Design', href: '#services' },
+      { text: 'Motion & Film', href: '#services' },
+      { text: 'Strategy', href: '#services' },
+    ],
+  },
+  {
+    label: 'Follow',
+    items: [
+      { text: 'Instagram', href: '#', external: true },
+      { text: 'LinkedIn', href: '#', external: true },
+      { text: 'Dribbble', href: '#', external: true },
+    ],
+  },
+]
+
+function FooterLink({ item }) {
+  const [hovered, setHovered] = useState(false)
+  const isLink = !!item.href
+  const style = {
+    fontFamily: 'DM Sans', fontSize: '12px', fontWeight: 300,
+    letterSpacing: '0.5px', lineHeight: 1,
+    color: isLink ? (hovered ? 'var(--cream)' : 'var(--muted)') : 'var(--muted)',
+    textDecoration: 'none',
+    transition: 'color 0.2s',
+    opacity: isLink ? 1 : 0.45,
+    display: 'flex', alignItems: 'center', gap: '6px',
+  }
+  if (!isLink) return <span style={style}>{item.text}</span>
+  return (
+    <a
+      href={item.href}
+      aria-label={item.external ? `VORM on ${item.text}` : undefined}
+      style={style}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {item.text}
+      {item.external && (
+        <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true"
+          style={{ opacity: hovered ? 1 : 0.4, transition: 'opacity 0.2s', flexShrink: 0 }}>
+          <path d="M1 8L8 1M8 1H3M8 1V6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
+    </a>
+  )
+}
+
 function Footer() {
   return (
-    <footer className="footer-wrap">
-      <span style={{ fontFamily: 'DM Sans', fontSize: '10px', letterSpacing: '1px', color: 'var(--muted)', opacity: 0.5 }}>
-        © 2026 VORM Studio B.V. — Amsterdam
-      </span>
-      <div style={{ display: 'flex', gap: '28px' }}>
-        {[
-          { label: 'Instagram', href: '#' },
-          { label: 'LinkedIn', href: '#' },
-          { label: 'Dribbble', href: '#' },
-        ].map(({ label, href }) => (
-          <a key={label} href={href} aria-label={`VORM on ${label}`} style={{
-            fontFamily: 'DM Sans', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase',
-            color: 'var(--muted)', textDecoration: 'none', opacity: 0.5,
-            transition: 'color 0.2s, opacity 0.2s',
+    <footer style={{ borderTop: '1px solid var(--border)' }}>
+      {/* Ghost wordmark */}
+      <div className="footer-wordmark" aria-hidden="true">VORM</div>
+
+      {/* Main columns area */}
+      <div className="footer-body">
+        {/* Left: editorial tagline */}
+        <div className="footer-tagline">
+          <span style={{
+            fontFamily: 'Cormorant', fontStyle: 'italic', fontWeight: 300,
+            fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.15,
+            color: 'var(--cream)', letterSpacing: '-0.3px', display: 'block',
+            marginBottom: '28px',
+          }}>
+            Work that refuses<br />to go unnoticed.
+          </span>
+          <a href="#contact" style={{
+            fontFamily: 'DM Sans', fontSize: '10px', letterSpacing: '2.5px',
+            textTransform: 'uppercase', color: 'var(--lime)',
+            textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px',
+            transition: 'gap 0.25s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = 'var(--lime)'; e.currentTarget.style.opacity = '1' }}
-          onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.opacity = '0.5' }}
-          >{label}</a>
-        ))}
+          onMouseEnter={e => e.currentTarget.style.gap = '16px'}
+          onMouseLeave={e => e.currentTarget.style.gap = '10px'}
+          >
+            Start a project
+            <span style={{ display: 'inline-block', width: '20px', height: '1px', background: 'var(--lime)' }} />
+          </a>
+        </div>
+
+        {/* Right: columns */}
+        <div className="footer-cols">
+          {footerColumns.map(col => (
+            <div key={col.label} className="footer-col">
+              <p style={{
+                fontFamily: 'DM Sans', fontSize: '9px', letterSpacing: '2.5px',
+                textTransform: 'uppercase', color: 'var(--lime)',
+                marginBottom: '20px', fontWeight: 500,
+              }}>{col.label}</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {col.items.map(item => (
+                  <FooterLink key={item.text} item={item} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="footer-bar">
+        <span style={{
+          fontFamily: 'DM Sans', fontSize: '10px', letterSpacing: '1px',
+          color: 'var(--muted)', opacity: 0.45,
+        }}>
+          © 2026 VORM Studio B.V. — Amsterdam
+        </span>
+        <div style={{ display: 'flex', gap: '24px' }}>
+          {['Privacy', 'Terms'].map(label => (
+            <a key={label} href="#" style={{
+              fontFamily: 'DM Sans', fontSize: '10px', letterSpacing: '1px',
+              color: 'var(--muted)', textDecoration: 'none', opacity: 0.45,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '0.45'}
+            >{label}</a>
+          ))}
+        </div>
       </div>
     </footer>
   )

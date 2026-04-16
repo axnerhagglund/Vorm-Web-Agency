@@ -140,10 +140,41 @@ body::after {
   display: flex; gap: 64px;
   border-top: 1px solid var(--border); padding-top: 48px;
 }
-.footer-wrap {
-  padding: 28px 48px;
+.footer-wordmark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 14vw, 200px);
+  letter-spacing: -2px;
+  line-height: 0.88;
+  color: rgba(237, 234, 228, 0.04);
+  padding: 48px 48px 0;
+  pointer-events: none;
+  user-select: none;
+}
+.footer-body {
+  display: flex;
+  gap: 64px;
+  padding: 56px 48px 64px;
+  align-items: flex-start;
+}
+.footer-tagline {
+  flex: 0 0 auto;
+  max-width: 380px;
+}
+.footer-cols {
+  flex: 1;
+  display: flex;
+  gap: 48px;
+  justify-content: flex-end;
+}
+.footer-col {
+  min-width: 100px;
+}
+.footer-bar {
+  padding: 20px 48px;
   border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Section label pattern */
@@ -179,7 +210,11 @@ body::after {
   .work-row-view { display: none; }
 
   .about-cols { flex-direction: column; gap: 20px; }
-  .footer-wrap { padding: 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-wordmark { padding: 32px 24px 0; }
+  .footer-body { flex-direction: column; gap: 40px; padding: 40px 24px 48px; }
+  .footer-tagline { max-width: 100%; }
+  .footer-cols { flex-wrap: wrap; gap: 32px; justify-content: flex-start; }
+  .footer-bar { padding: 20px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
 
   .service-tags { display: none; }
 }
